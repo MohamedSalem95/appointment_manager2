@@ -24,6 +24,15 @@ export default {
       },
       received(data) {},
       disconnected() {}
+    },
+    AppointmentStatusChannel: {
+      connected() {
+        console.log('connected from Approve')
+      },
+      received(data) {
+        if(data['status'] == 3 && data['id'] == this.id) this.visible = false
+      },
+      disconnected() {}
     }
   },
   methods: {
@@ -44,6 +53,9 @@ export default {
     }
     this.$cable.subscribe({
       channel: 'AppointmentChannel'
+    })
+    this.$cable.subscribe({
+      channel: 'AppointmentStatusChannel'
     })
   }
 }

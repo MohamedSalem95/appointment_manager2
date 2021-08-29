@@ -43,9 +43,8 @@ class AppointmentsController < ApplicationController
 
     def delay_save
         @appointment = Appointment.find(params[:id])
-        @appointment.update(appointment_delay_params)
         @appointment.status = 3
-        if @appointment.save
+        if @appointment.update(appointment_delay_params)
             flash[:success] = 'تم تاجيل الميعاد بنجاح'
             redirect_to appointments_path
         else
