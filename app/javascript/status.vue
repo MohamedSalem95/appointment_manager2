@@ -7,6 +7,7 @@
     <span v-if="appStatus == 2" class="badge bg-primary"> تم الموافقه </span>
 
 
+    <!--<span v-if="appStatus == 3 && date == getDate" class="badge bg-success"> لم يدخل بعد (مؤجل) </span>-->
 
     <span v-if="appStatus == 3" class="badge bg-warning"> تم التاجيل </span>
 
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import currentVue from './current.vue'
 export default {
     props: {
         id: Number,
@@ -45,17 +47,23 @@ export default {
             disconnected() {}
         }
     },
+    computed: {
+        getDate: () => {
+            let currentDate = new Date
+            currentDate.setHours(0, 0, 0, 0)
+            return currentDate
+        }
+    },
     mounted () {
         this.$cable.subscribe({
             channel: 'AppointmentStatusChannel'
         })
+
+        console.log(date)
+        console.log(this.getDate)
     }
 }
 </script>
 
 <style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
 </style>
